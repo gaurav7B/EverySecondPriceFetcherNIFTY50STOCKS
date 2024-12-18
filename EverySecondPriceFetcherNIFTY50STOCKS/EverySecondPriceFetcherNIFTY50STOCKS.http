@@ -1,0 +1,6 @@
+@EverySecondPriceFetcherNIFTY50STOCKS_HostAddress = http://localhost:5058
+
+GET {{EverySecondPriceFetcherNIFTY50STOCKS_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
