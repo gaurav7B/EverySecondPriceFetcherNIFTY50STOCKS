@@ -1,5 +1,6 @@
 using EverySecondPriceFetcherNIFTY50STOCKS.Model;
 using Microsoft.EntityFrameworkCore;
+using StockLogger.BackgroundServices.BackGroundServiceForEach;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -16,6 +17,8 @@ builder.Services.AddSwaggerGen();
 
 // Register HttpClient
 builder.Services.AddHttpClient(); // This adds the HttpClient service
+
+builder.Services.AddHostedService<MadMaxService>();
 
 var app = builder.Build();
 
