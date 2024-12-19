@@ -8,16 +8,15 @@ using System.Text.Json;
 
 namespace StockLogger.BackgroundServices.BackGroundServiceForEach
 {
-    public class MadMaxService : BackgroundService
+    public class _5Service : BackgroundService
     {
-        private readonly ILogger<MadMaxService> _logger;
         private readonly HttpClient _httpClient;
         private readonly IHttpClientFactory _httpClientFactory;  // Inject IHttpClientFactory
         private bool _isRunning = true;
+        private int ID = 5;
 
-        public MadMaxService(ILogger<MadMaxService> logger, IHttpClientFactory httpClientFactory)
+        public _5Service(IHttpClientFactory httpClientFactory)
         {
-            _logger = logger;
             _httpClient = new HttpClient();
             _httpClientFactory = httpClientFactory;  // Assign IHttpClientFactory
         }
@@ -26,7 +25,7 @@ namespace StockLogger.BackgroundServices.BackGroundServiceForEach
         {
             while (!stoppingToken.IsCancellationRequested)
             {
-                    await PriceMaker(); // Ensure PriceMaker completes before the next iteration starts.
+                await PriceMaker(); // Ensure PriceMaker completes before the next iteration starts.
             }
         }
 
@@ -52,17 +51,16 @@ namespace StockLogger.BackgroundServices.BackGroundServiceForEach
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "Error fetching stock ticker exchanges.");
                 return null;
             }
         }
 
         public async Task PriceSecMaker(long Id, string ticker, string exchange)
         {
-        
+
             var response = await _httpClient.GetAsync($"https://localhost:7237/api/Stock/price?ticker={ticker}&exchange={exchange}"); // API to get the TICKER time and price
 
-            if (response.IsSuccessStatusCode) 
+            if (response.IsSuccessStatusCode)
             {
                 var stockDataJson = await response.Content.ReadAsStringAsync();
                 // Assuming the response is a JSON object containing "time" and "price"
@@ -87,7 +85,7 @@ namespace StockLogger.BackgroundServices.BackGroundServiceForEach
                     // Send the request
                     var postResponse = await _httpClient.PostAsync("https://localhost:7237/api/StockPricePerSec", content);
 
-                    if(postResponse.IsSuccessStatusCode)
+                    if (postResponse.IsSuccessStatusCode)
                     {
 
                     }
@@ -98,8 +96,8 @@ namespace StockLogger.BackgroundServices.BackGroundServiceForEach
         private async Task PriceMaker()
         {
             var currentMinute = DateTime.Now.Second;
-             
-            var stocks = (await GetStockTickerExchanges())?.Select(x => new { x.Id, x.Ticker, x.Exchange }).Where(x => x.Id == 1).ToArray(); // Get the Stocks
+
+            var stocks = (await GetStockTickerExchanges())?.Select(x => new { x.Id, x.Ticker, x.Exchange }).Where(x => x.Id == ID).ToArray(); // Get the Stocks
             var stockTasks = stocks.Select(stock => PriceSecMaker((long)stock.Id, stock.Ticker, stock.Exchange)); // Create tasks dynamically for each stock
 
             await Task.WhenAll(stockTasks); // Process all tasks in parallel

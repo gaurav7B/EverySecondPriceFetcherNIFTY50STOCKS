@@ -25,7 +25,7 @@ namespace EverySecondPriceFetcherNIFTY50STOCKS.Controllers
             _context.StockPricePerSec.Add(stockPricePerSec);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetStockPricePerSec", new { id = stockPricePerSec.Id }, stockPricePerSec);
+            return Ok();
         }
 
     }
