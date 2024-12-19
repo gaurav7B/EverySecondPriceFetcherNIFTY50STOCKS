@@ -10,7 +10,6 @@ namespace EverySecondPriceFetcherNIFTY50STOCKS.Model
         {
         }
 
-        public DbSet<StockTickerExchange> StockTickerExchanges { get; set; }
         public DbSet<StockPricePerSec> StockPricePerSec { get; set; }
     }
 }
