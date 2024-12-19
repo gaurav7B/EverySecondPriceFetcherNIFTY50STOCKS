@@ -31,7 +31,13 @@ namespace EverySecondPriceFetcherNIFTY50STOCKS.Controllers.BackGroundService
                 ("HDFCLIFE", "NSE", "HDFC Life Insurance", 27),
                 ("SBILIFE", "NSE", "SBI Life Insurance", 28),
                 ("M%26M", "NSE", "Mahindra & Mahindra", 29),
-                ("DIVISLAB", "NSE", "Divi's Laboratories", 30)
+                ("DIVISLAB", "NSE", "Divi's Laboratories", 30),
+                ("JSWSTEEL", "NSE", "JSW Steel", 31),
+                ("ADANIENT", "NSE", "Adani Enterprises", 32),
+                ("BPCL", "NSE", "Bharat Petroleum Corporation", 33),
+                ("INDUSINDBK", "NSE", "IndusInd Bank", 34),
+                ("CIPLA", "NSE", "Cipla", 35),
+                ("DRREDDY", "NSE", "Dr. Reddy's Laboratories", 36)
             };
         }
 

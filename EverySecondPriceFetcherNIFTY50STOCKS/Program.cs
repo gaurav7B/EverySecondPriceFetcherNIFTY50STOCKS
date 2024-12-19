@@ -18,9 +18,10 @@ builder.Services.AddSwaggerGen();
 // Register HttpClient
 builder.Services.AddHttpClient(); // This adds the HttpClient service
 
-//builder.Services.AddHostedService<StockPriceFetcherService>();
-//builder.Services.AddHostedService<StockPriceFetcherService2>();
+builder.Services.AddHostedService<StockPriceFetcherService>();
+builder.Services.AddHostedService<StockPriceFetcherService2>();
 builder.Services.AddHostedService<StockPriceFetcherService3>();
+builder.Services.AddHostedService<StockPriceFetcherService4>();
 
 var app = builder.Build();
 
