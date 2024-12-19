@@ -957,22 +957,485 @@ namespace EverySecondPriceFetcherNIFTY50STOCKS.Controllers
         }
 
 
+        [HttpPost("addStockPrice31")]
+        public async Task<ActionResult> PostStockPrice31([FromBody] StockPricePerSec stockPricePerSec, CancellationToken cancellationToken)
+        {
+            if (stockPricePerSec == null)
+            {
+                return BadRequest("Invalid stock price data.");
+            }
 
+            try
+            {
+                _context.StockPricePerSec.Add(stockPricePerSec);
+                await _context.SaveChangesAsync(cancellationToken);
+                return Ok("Stock price data inserted successfully.");
+            }
+            catch (OperationCanceledException)
+            {
+                return StatusCode(StatusCodes.Status503ServiceUnavailable, "Operation canceled.");
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, $"An error occurred: {ex.Message}");
+            }
+        }
 
+        [HttpPost("addStockPrice32")]
+        public async Task<ActionResult> PostStockPrice32([FromBody] StockPricePerSec stockPricePerSec, CancellationToken cancellationToken)
+        {
+            if (stockPricePerSec == null)
+            {
+                return BadRequest("Invalid stock price data.");
+            }
 
+            try
+            {
+                _context.StockPricePerSec.Add(stockPricePerSec);
+                await _context.SaveChangesAsync(cancellationToken);
+                return Ok("Stock price data inserted successfully.");
+            }
+            catch (OperationCanceledException)
+            {
+                return StatusCode(StatusCodes.Status503ServiceUnavailable, "Operation canceled.");
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, $"An error occurred: {ex.Message}");
+            }
+        }
 
+        [HttpPost("addStockPrice33")]
+        public async Task<ActionResult> PostStockPrice33([FromBody] StockPricePerSec stockPricePerSec, CancellationToken cancellationToken)
+        {
+            if (stockPricePerSec == null)
+            {
+                return BadRequest("Invalid stock price data.");
+            }
 
+            try
+            {
+                _context.StockPricePerSec.Add(stockPricePerSec);
+                await _context.SaveChangesAsync(cancellationToken);
+                return Ok("Stock price data inserted successfully.");
+            }
+            catch (OperationCanceledException)
+            {
+                return StatusCode(StatusCodes.Status503ServiceUnavailable, "Operation canceled.");
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, $"An error occurred: {ex.Message}");
+            }
+        }
 
+        [HttpPost("addStockPrice34")]
+        public async Task<ActionResult> PostStockPrice34([FromBody] StockPricePerSec stockPricePerSec, CancellationToken cancellationToken)
+        {
+            if (stockPricePerSec == null)
+            {
+                return BadRequest("Invalid stock price data.");
+            }
 
+            try
+            {
+                _context.StockPricePerSec.Add(stockPricePerSec);
+                await _context.SaveChangesAsync(cancellationToken);
+                return Ok("Stock price data inserted successfully.");
+            }
+            catch (OperationCanceledException)
+            {
+                return StatusCode(StatusCodes.Status503ServiceUnavailable, "Operation canceled.");
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, $"An error occurred: {ex.Message}");
+            }
+        }
 
+        [HttpPost("addStockPrice35")]
+        public async Task<ActionResult> PostStockPrice35([FromBody] StockPricePerSec stockPricePerSec, CancellationToken cancellationToken)
+        {
+            if (stockPricePerSec == null)
+            {
+                return BadRequest("Invalid stock price data.");
+            }
 
+            try
+            {
+                _context.StockPricePerSec.Add(stockPricePerSec);
+                await _context.SaveChangesAsync(cancellationToken);
+                return Ok("Stock price data inserted successfully.");
+            }
+            catch (OperationCanceledException)
+            {
+                return StatusCode(StatusCodes.Status503ServiceUnavailable, "Operation canceled.");
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, $"An error occurred: {ex.Message}");
+            }
+        }
 
+        [HttpPost("addStockPrice36")]
+        public async Task<ActionResult> PostStockPrice36([FromBody] StockPricePerSec stockPricePerSec, CancellationToken cancellationToken)
+        {
+            if (stockPricePerSec == null)
+            {
+                return BadRequest("Invalid stock price data.");
+            }
 
+            try
+            {
+                _context.StockPricePerSec.Add(stockPricePerSec);
+                await _context.SaveChangesAsync(cancellationToken);
+                return Ok("Stock price data inserted successfully.");
+            }
+            catch (OperationCanceledException)
+            {
+                return StatusCode(StatusCodes.Status503ServiceUnavailable, "Operation canceled.");
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, $"An error occurred: {ex.Message}");
+            }
+        }
 
+        [HttpPost("addStockPrice37")]
+        public async Task<ActionResult> PostStockPrice37([FromBody] StockPricePerSec stockPricePerSec, CancellationToken cancellationToken)
+        {
+            if (stockPricePerSec == null)
+            {
+                return BadRequest("Invalid stock price data.");
+            }
 
+            try
+            {
+                _context.StockPricePerSec.Add(stockPricePerSec);
+                await _context.SaveChangesAsync(cancellationToken);
+                return Ok("Stock price data inserted successfully.");
+            }
+            catch (OperationCanceledException)
+            {
+                return StatusCode(StatusCodes.Status503ServiceUnavailable, "Operation canceled.");
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, $"An error occurred: {ex.Message}");
+            }
+        }
 
+        [HttpPost("addStockPrice38")]
+        public async Task<ActionResult> PostStockPrice38([FromBody] StockPricePerSec stockPricePerSec, CancellationToken cancellationToken)
+        {
+            if (stockPricePerSec == null)
+            {
+                return BadRequest("Invalid stock price data.");
+            }
 
+            try
+            {
+                _context.StockPricePerSec.Add(stockPricePerSec);
+                await _context.SaveChangesAsync(cancellationToken);
+                return Ok("Stock price data inserted successfully.");
+            }
+            catch (OperationCanceledException)
+            {
+                return StatusCode(StatusCodes.Status503ServiceUnavailable, "Operation canceled.");
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, $"An error occurred: {ex.Message}");
+            }
+        }
 
+        [HttpPost("addStockPrice39")]
+        public async Task<ActionResult> PostStockPrice39([FromBody] StockPricePerSec stockPricePerSec, CancellationToken cancellationToken)
+        {
+            if (stockPricePerSec == null)
+            {
+                return BadRequest("Invalid stock price data.");
+            }
+
+            try
+            {
+                _context.StockPricePerSec.Add(stockPricePerSec);
+                await _context.SaveChangesAsync(cancellationToken);
+                return Ok("Stock price data inserted successfully.");
+            }
+            catch (OperationCanceledException)
+            {
+                return StatusCode(StatusCodes.Status503ServiceUnavailable, "Operation canceled.");
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, $"An error occurred: {ex.Message}");
+            }
+        }
+
+        [HttpPost("addStockPrice40")]
+        public async Task<ActionResult> PostStockPrice40([FromBody] StockPricePerSec stockPricePerSec, CancellationToken cancellationToken)
+        {
+            if (stockPricePerSec == null)
+            {
+                return BadRequest("Invalid stock price data.");
+            }
+
+            try
+            {
+                _context.StockPricePerSec.Add(stockPricePerSec);
+                await _context.SaveChangesAsync(cancellationToken);
+                return Ok("Stock price data inserted successfully.");
+            }
+            catch (OperationCanceledException)
+            {
+                return StatusCode(StatusCodes.Status503ServiceUnavailable, "Operation canceled.");
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, $"An error occurred: {ex.Message}");
+            }
+        }
+
+        [HttpPost("addStockPrice41")]
+        public async Task<ActionResult> PostStockPrice41([FromBody] StockPricePerSec stockPricePerSec, CancellationToken cancellationToken)
+        {
+            if (stockPricePerSec == null)
+            {
+                return BadRequest("Invalid stock price data.");
+            }
+
+            try
+            {
+                _context.StockPricePerSec.Add(stockPricePerSec);
+                await _context.SaveChangesAsync(cancellationToken);
+                return Ok("Stock price data inserted successfully.");
+            }
+            catch (OperationCanceledException)
+            {
+                return StatusCode(StatusCodes.Status503ServiceUnavailable, "Operation canceled.");
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, $"An error occurred: {ex.Message}");
+            }
+        }
+
+        [HttpPost("addStockPrice42")]
+        public async Task<ActionResult> PostStockPrice42([FromBody] StockPricePerSec stockPricePerSec, CancellationToken cancellationToken)
+        {
+            if (stockPricePerSec == null)
+            {
+                return BadRequest("Invalid stock price data.");
+            }
+
+            try
+            {
+                _context.StockPricePerSec.Add(stockPricePerSec);
+                await _context.SaveChangesAsync(cancellationToken);
+                return Ok("Stock price data inserted successfully.");
+            }
+            catch (OperationCanceledException)
+            {
+                return StatusCode(StatusCodes.Status503ServiceUnavailable, "Operation canceled.");
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, $"An error occurred: {ex.Message}");
+            }
+        }
+
+        [HttpPost("addStockPrice43")]
+        public async Task<ActionResult> PostStockPrice43([FromBody] StockPricePerSec stockPricePerSec, CancellationToken cancellationToken)
+        {
+            if (stockPricePerSec == null)
+            {
+                return BadRequest("Invalid stock price data.");
+            }
+
+            try
+            {
+                _context.StockPricePerSec.Add(stockPricePerSec);
+                await _context.SaveChangesAsync(cancellationToken);
+                return Ok("Stock price data inserted successfully.");
+            }
+            catch (OperationCanceledException)
+            {
+                return StatusCode(StatusCodes.Status503ServiceUnavailable, "Operation canceled.");
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, $"An error occurred: {ex.Message}");
+            }
+        }
+
+        [HttpPost("addStockPrice44")]
+        public async Task<ActionResult> PostStockPrice44([FromBody] StockPricePerSec stockPricePerSec, CancellationToken cancellationToken)
+        {
+            if (stockPricePerSec == null)
+            {
+                return BadRequest("Invalid stock price data.");
+            }
+
+            try
+            {
+                _context.StockPricePerSec.Add(stockPricePerSec);
+                await _context.SaveChangesAsync(cancellationToken);
+                return Ok("Stock price data inserted successfully.");
+            }
+            catch (OperationCanceledException)
+            {
+                return StatusCode(StatusCodes.Status503ServiceUnavailable, "Operation canceled.");
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, $"An error occurred: {ex.Message}");
+            }
+        }
+
+        [HttpPost("addStockPrice45")]
+        public async Task<ActionResult> PostStockPrice45([FromBody] StockPricePerSec stockPricePerSec, CancellationToken cancellationToken)
+        {
+            if (stockPricePerSec == null)
+            {
+                return BadRequest("Invalid stock price data.");
+            }
+
+            try
+            {
+                _context.StockPricePerSec.Add(stockPricePerSec);
+                await _context.SaveChangesAsync(cancellationToken);
+                return Ok("Stock price data inserted successfully.");
+            }
+            catch (OperationCanceledException)
+            {
+                return StatusCode(StatusCodes.Status503ServiceUnavailable, "Operation canceled.");
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, $"An error occurred: {ex.Message}");
+            }
+        }
+
+        [HttpPost("addStockPrice46")]
+        public async Task<ActionResult> PostStockPrice46([FromBody] StockPricePerSec stockPricePerSec, CancellationToken cancellationToken)
+        {
+            if (stockPricePerSec == null)
+            {
+                return BadRequest("Invalid stock price data.");
+            }
+
+            try
+            {
+                _context.StockPricePerSec.Add(stockPricePerSec);
+                await _context.SaveChangesAsync(cancellationToken);
+                return Ok("Stock price data inserted successfully.");
+            }
+            catch (OperationCanceledException)
+            {
+                return StatusCode(StatusCodes.Status503ServiceUnavailable, "Operation canceled.");
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, $"An error occurred: {ex.Message}");
+            }
+        }
+
+        [HttpPost("addStockPrice47")]
+        public async Task<ActionResult> PostStockPrice47([FromBody] StockPricePerSec stockPricePerSec, CancellationToken cancellationToken)
+        {
+            if (stockPricePerSec == null)
+            {
+                return BadRequest("Invalid stock price data.");
+            }
+
+            try
+            {
+                _context.StockPricePerSec.Add(stockPricePerSec);
+                await _context.SaveChangesAsync(cancellationToken);
+                return Ok("Stock price data inserted successfully.");
+            }
+            catch (OperationCanceledException)
+            {
+                return StatusCode(StatusCodes.Status503ServiceUnavailable, "Operation canceled.");
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, $"An error occurred: {ex.Message}");
+            }
+        }
+
+        [HttpPost("addStockPrice48")]
+        public async Task<ActionResult> PostStockPrice48([FromBody] StockPricePerSec stockPricePerSec, CancellationToken cancellationToken)
+        {
+            if (stockPricePerSec == null)
+            {
+                return BadRequest("Invalid stock price data.");
+            }
+
+            try
+            {
+                _context.StockPricePerSec.Add(stockPricePerSec);
+                await _context.SaveChangesAsync(cancellationToken);
+                return Ok("Stock price data inserted successfully.");
+            }
+            catch (OperationCanceledException)
+            {
+                return StatusCode(StatusCodes.Status503ServiceUnavailable, "Operation canceled.");
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, $"An error occurred: {ex.Message}");
+            }
+        }
+
+        [HttpPost("addStockPrice49")]
+        public async Task<ActionResult> PostStockPrice49([FromBody] StockPricePerSec stockPricePerSec, CancellationToken cancellationToken)
+        {
+            if (stockPricePerSec == null)
+            {
+                return BadRequest("Invalid stock price data.");
+            }
+
+            try
+            {
+                _context.StockPricePerSec.Add(stockPricePerSec);
+                await _context.SaveChangesAsync(cancellationToken);
+                return Ok("Stock price data inserted successfully.");
+            }
+            catch (OperationCanceledException)
+            {
+                return StatusCode(StatusCodes.Status503ServiceUnavailable, "Operation canceled.");
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, $"An error occurred: {ex.Message}");
+            }
+        }
+
+        [HttpPost("addStockPrice50")]
+        public async Task<ActionResult> PostStockPrice50([FromBody] StockPricePerSec stockPricePerSec, CancellationToken cancellationToken)
+        {
+            if (stockPricePerSec == null)
+            {
+                return BadRequest("Invalid stock price data.");
+            }
+
+            try
+            {
+                _context.StockPricePerSec.Add(stockPricePerSec);
+                await _context.SaveChangesAsync(cancellationToken);
+                return Ok("Stock price data inserted successfully.");
+            }
+            catch (OperationCanceledException)
+            {
+                return StatusCode(StatusCodes.Status503ServiceUnavailable, "Operation canceled.");
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, $"An error occurred: {ex.Message}");
+            }
+        }
 
     }
 }

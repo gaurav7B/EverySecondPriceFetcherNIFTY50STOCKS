@@ -1626,75 +1626,1095 @@ namespace EverySecondPriceFetcherNIFTY50STOCKS.Controllers
         }
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+        [HttpGet("price31")]
+        public async Task<IActionResult> GetStockPriceByTicker31(string ticker, string exchange, CancellationToken cancellationToken)
+        {
+            var requestDto = new GetStockPriceRequestDto
+            {
+                Ticker = ticker,
+                Exchange = exchange
+            };
+
+            var url = $"https://www.google.com/finance/quote/{requestDto.Ticker}:{requestDto.Exchange}";
+
+            string response;
+            try
+            {
+                // Pass cancellation token to support graceful stopping.
+                response = await _httpClient.GetStringAsync(url, cancellationToken);
+            }
+            catch (OperationCanceledException)
+            {
+                // Handle cancellation gracefully.
+                return StatusCode(StatusCodes.Status503ServiceUnavailable, "Request canceled.");
+            }
+            catch (Exception ex)
+            {
+                // Handle other exceptions.
+                return StatusCode(StatusCodes.Status500InternalServerError, $"Error: {ex.Message}");
+            }
+
+            var htmlDoc = new HtmlDocument();
+            htmlDoc.LoadHtml(response);
+
+            var priceNode = htmlDoc.DocumentNode.SelectSingleNode("//div[contains(@class, 'YMlKec fxKbKc')]");
+            if (priceNode == null)
+            {
+                return NotFound("Price not found.");
+            }
+
+            var priceText = priceNode.InnerText.Trim();
+            if (!decimal.TryParse(priceText.Substring(1).Replace(",", ""), out var price))
+            {
+                return BadRequest("Failed to parse price.");
+            }
+
+            var stockData = new StockDataDto
+            {
+                time = DateTime.Now,
+                price = price
+            };
+
+            return Ok(stockData);
+        }
+
+
+
+
+        [HttpGet("price32")]
+        public async Task<IActionResult> GetStockPriceByTicker32(string ticker, string exchange, CancellationToken cancellationToken)
+        {
+            var requestDto = new GetStockPriceRequestDto
+            {
+                Ticker = ticker,
+                Exchange = exchange
+            };
+
+            var url = $"https://www.google.com/finance/quote/{requestDto.Ticker}:{requestDto.Exchange}";
+
+            string response;
+            try
+            {
+                // Pass cancellation token to support graceful stopping.
+                response = await _httpClient.GetStringAsync(url, cancellationToken);
+            }
+            catch (OperationCanceledException)
+            {
+                // Handle cancellation gracefully.
+                return StatusCode(StatusCodes.Status503ServiceUnavailable, "Request canceled.");
+            }
+            catch (Exception ex)
+            {
+                // Handle other exceptions.
+                return StatusCode(StatusCodes.Status500InternalServerError, $"Error: {ex.Message}");
+            }
+
+            var htmlDoc = new HtmlDocument();
+            htmlDoc.LoadHtml(response);
+
+            var priceNode = htmlDoc.DocumentNode.SelectSingleNode("//div[contains(@class, 'YMlKec fxKbKc')]");
+            if (priceNode == null)
+            {
+                return NotFound("Price not found.");
+            }
+
+            var priceText = priceNode.InnerText.Trim();
+            if (!decimal.TryParse(priceText.Substring(1).Replace(",", ""), out var price))
+            {
+                return BadRequest("Failed to parse price.");
+            }
+
+            var stockData = new StockDataDto
+            {
+                time = DateTime.Now,
+                price = price
+            };
+
+            return Ok(stockData);
+        }
+
+
+
+
+        [HttpGet("price33")]
+        public async Task<IActionResult> GetStockPriceByTicker33(string ticker, string exchange, CancellationToken cancellationToken)
+        {
+            var requestDto = new GetStockPriceRequestDto
+            {
+                Ticker = ticker,
+                Exchange = exchange
+            };
+
+            var url = $"https://www.google.com/finance/quote/{requestDto.Ticker}:{requestDto.Exchange}";
+
+            string response;
+            try
+            {
+                // Pass cancellation token to support graceful stopping.
+                response = await _httpClient.GetStringAsync(url, cancellationToken);
+            }
+            catch (OperationCanceledException)
+            {
+                // Handle cancellation gracefully.
+                return StatusCode(StatusCodes.Status503ServiceUnavailable, "Request canceled.");
+            }
+            catch (Exception ex)
+            {
+                // Handle other exceptions.
+                return StatusCode(StatusCodes.Status500InternalServerError, $"Error: {ex.Message}");
+            }
+
+            var htmlDoc = new HtmlDocument();
+            htmlDoc.LoadHtml(response);
+
+            var priceNode = htmlDoc.DocumentNode.SelectSingleNode("//div[contains(@class, 'YMlKec fxKbKc')]");
+            if (priceNode == null)
+            {
+                return NotFound("Price not found.");
+            }
+
+            var priceText = priceNode.InnerText.Trim();
+            if (!decimal.TryParse(priceText.Substring(1).Replace(",", ""), out var price))
+            {
+                return BadRequest("Failed to parse price.");
+            }
+
+            var stockData = new StockDataDto
+            {
+                time = DateTime.Now,
+                price = price
+            };
+
+            return Ok(stockData);
+        }
+
+
+
+        [HttpGet("price34")]
+        public async Task<IActionResult> GetStockPriceByTicker34(string ticker, string exchange, CancellationToken cancellationToken)
+        {
+            var requestDto = new GetStockPriceRequestDto
+            {
+                Ticker = ticker,
+                Exchange = exchange
+            };
+
+            var url = $"https://www.google.com/finance/quote/{requestDto.Ticker}:{requestDto.Exchange}";
+
+            string response;
+            try
+            {
+                // Pass cancellation token to support graceful stopping.
+                response = await _httpClient.GetStringAsync(url, cancellationToken);
+            }
+            catch (OperationCanceledException)
+            {
+                // Handle cancellation gracefully.
+                return StatusCode(StatusCodes.Status503ServiceUnavailable, "Request canceled.");
+            }
+            catch (Exception ex)
+            {
+                // Handle other exceptions.
+                return StatusCode(StatusCodes.Status500InternalServerError, $"Error: {ex.Message}");
+            }
+
+            var htmlDoc = new HtmlDocument();
+            htmlDoc.LoadHtml(response);
+
+            var priceNode = htmlDoc.DocumentNode.SelectSingleNode("//div[contains(@class, 'YMlKec fxKbKc')]");
+            if (priceNode == null)
+            {
+                return NotFound("Price not found.");
+            }
+
+            var priceText = priceNode.InnerText.Trim();
+            if (!decimal.TryParse(priceText.Substring(1).Replace(",", ""), out var price))
+            {
+                return BadRequest("Failed to parse price.");
+            }
+
+            var stockData = new StockDataDto
+            {
+                time = DateTime.Now,
+                price = price
+            };
+
+            return Ok(stockData);
+        }
+
+
+        [HttpGet("price35")]
+        public async Task<IActionResult> GetStockPriceByTicker35(string ticker, string exchange, CancellationToken cancellationToken)
+        {
+            var requestDto = new GetStockPriceRequestDto
+            {
+                Ticker = ticker,
+                Exchange = exchange
+            };
+
+            var url = $"https://www.google.com/finance/quote/{requestDto.Ticker}:{requestDto.Exchange}";
+
+            string response;
+            try
+            {
+                // Pass cancellation token to support graceful stopping.
+                response = await _httpClient.GetStringAsync(url, cancellationToken);
+            }
+            catch (OperationCanceledException)
+            {
+                // Handle cancellation gracefully.
+                return StatusCode(StatusCodes.Status503ServiceUnavailable, "Request canceled.");
+            }
+            catch (Exception ex)
+            {
+                // Handle other exceptions.
+                return StatusCode(StatusCodes.Status500InternalServerError, $"Error: {ex.Message}");
+            }
+
+            var htmlDoc = new HtmlDocument();
+            htmlDoc.LoadHtml(response);
+
+            var priceNode = htmlDoc.DocumentNode.SelectSingleNode("//div[contains(@class, 'YMlKec fxKbKc')]");
+            if (priceNode == null)
+            {
+                return NotFound("Price not found.");
+            }
+
+            var priceText = priceNode.InnerText.Trim();
+            if (!decimal.TryParse(priceText.Substring(1).Replace(",", ""), out var price))
+            {
+                return BadRequest("Failed to parse price.");
+            }
+
+            var stockData = new StockDataDto
+            {
+                time = DateTime.Now,
+                price = price
+            };
+
+            return Ok(stockData);
+        }
+
+
+
+        [HttpGet("price36")]
+        public async Task<IActionResult> GetStockPriceByTicker36(string ticker, string exchange, CancellationToken cancellationToken)
+        {
+            var requestDto = new GetStockPriceRequestDto
+            {
+                Ticker = ticker,
+                Exchange = exchange
+            };
+
+            var url = $"https://www.google.com/finance/quote/{requestDto.Ticker}:{requestDto.Exchange}";
+
+            string response;
+            try
+            {
+                // Pass cancellation token to support graceful stopping.
+                response = await _httpClient.GetStringAsync(url, cancellationToken);
+            }
+            catch (OperationCanceledException)
+            {
+                // Handle cancellation gracefully.
+                return StatusCode(StatusCodes.Status503ServiceUnavailable, "Request canceled.");
+            }
+            catch (Exception ex)
+            {
+                // Handle other exceptions.
+                return StatusCode(StatusCodes.Status500InternalServerError, $"Error: {ex.Message}");
+            }
+
+            var htmlDoc = new HtmlDocument();
+            htmlDoc.LoadHtml(response);
+
+            var priceNode = htmlDoc.DocumentNode.SelectSingleNode("//div[contains(@class, 'YMlKec fxKbKc')]");
+            if (priceNode == null)
+            {
+                return NotFound("Price not found.");
+            }
+
+            var priceText = priceNode.InnerText.Trim();
+            if (!decimal.TryParse(priceText.Substring(1).Replace(",", ""), out var price))
+            {
+                return BadRequest("Failed to parse price.");
+            }
+
+            var stockData = new StockDataDto
+            {
+                time = DateTime.Now,
+                price = price
+            };
+
+            return Ok(stockData);
+        }
+
+
+
+
+        [HttpGet("price37")]
+        public async Task<IActionResult> GetStockPriceByTicker37(string ticker, string exchange, CancellationToken cancellationToken)
+        {
+            var requestDto = new GetStockPriceRequestDto
+            {
+                Ticker = ticker,
+                Exchange = exchange
+            };
+
+            var url = $"https://www.google.com/finance/quote/{requestDto.Ticker}:{requestDto.Exchange}";
+
+            string response;
+            try
+            {
+                // Pass cancellation token to support graceful stopping.
+                response = await _httpClient.GetStringAsync(url, cancellationToken);
+            }
+            catch (OperationCanceledException)
+            {
+                // Handle cancellation gracefully.
+                return StatusCode(StatusCodes.Status503ServiceUnavailable, "Request canceled.");
+            }
+            catch (Exception ex)
+            {
+                // Handle other exceptions.
+                return StatusCode(StatusCodes.Status500InternalServerError, $"Error: {ex.Message}");
+            }
+
+            var htmlDoc = new HtmlDocument();
+            htmlDoc.LoadHtml(response);
+
+            var priceNode = htmlDoc.DocumentNode.SelectSingleNode("//div[contains(@class, 'YMlKec fxKbKc')]");
+            if (priceNode == null)
+            {
+                return NotFound("Price not found.");
+            }
+
+            var priceText = priceNode.InnerText.Trim();
+            if (!decimal.TryParse(priceText.Substring(1).Replace(",", ""), out var price))
+            {
+                return BadRequest("Failed to parse price.");
+            }
+
+            var stockData = new StockDataDto
+            {
+                time = DateTime.Now,
+                price = price
+            };
+
+            return Ok(stockData);
+        }
+
+
+
+
+        [HttpGet("price38")]
+        public async Task<IActionResult> GetStockPriceByTicker38(string ticker, string exchange, CancellationToken cancellationToken)
+        {
+            var requestDto = new GetStockPriceRequestDto
+            {
+                Ticker = ticker,
+                Exchange = exchange
+            };
+
+            var url = $"https://www.google.com/finance/quote/{requestDto.Ticker}:{requestDto.Exchange}";
+
+            string response;
+            try
+            {
+                // Pass cancellation token to support graceful stopping.
+                response = await _httpClient.GetStringAsync(url, cancellationToken);
+            }
+            catch (OperationCanceledException)
+            {
+                // Handle cancellation gracefully.
+                return StatusCode(StatusCodes.Status503ServiceUnavailable, "Request canceled.");
+            }
+            catch (Exception ex)
+            {
+                // Handle other exceptions.
+                return StatusCode(StatusCodes.Status500InternalServerError, $"Error: {ex.Message}");
+            }
+
+            var htmlDoc = new HtmlDocument();
+            htmlDoc.LoadHtml(response);
+
+            var priceNode = htmlDoc.DocumentNode.SelectSingleNode("//div[contains(@class, 'YMlKec fxKbKc')]");
+            if (priceNode == null)
+            {
+                return NotFound("Price not found.");
+            }
+
+            var priceText = priceNode.InnerText.Trim();
+            if (!decimal.TryParse(priceText.Substring(1).Replace(",", ""), out var price))
+            {
+                return BadRequest("Failed to parse price.");
+            }
+
+            var stockData = new StockDataDto
+            {
+                time = DateTime.Now,
+                price = price
+            };
+
+            return Ok(stockData);
+        }
+
+
+
+
+
+        [HttpGet("price39")]
+        public async Task<IActionResult> GetStockPriceByTicker39(string ticker, string exchange, CancellationToken cancellationToken)
+        {
+            var requestDto = new GetStockPriceRequestDto
+            {
+                Ticker = ticker,
+                Exchange = exchange
+            };
+
+            var url = $"https://www.google.com/finance/quote/{requestDto.Ticker}:{requestDto.Exchange}";
+
+            string response;
+            try
+            {
+                // Pass cancellation token to support graceful stopping.
+                response = await _httpClient.GetStringAsync(url, cancellationToken);
+            }
+            catch (OperationCanceledException)
+            {
+                // Handle cancellation gracefully.
+                return StatusCode(StatusCodes.Status503ServiceUnavailable, "Request canceled.");
+            }
+            catch (Exception ex)
+            {
+                // Handle other exceptions.
+                return StatusCode(StatusCodes.Status500InternalServerError, $"Error: {ex.Message}");
+            }
+
+            var htmlDoc = new HtmlDocument();
+            htmlDoc.LoadHtml(response);
+
+            var priceNode = htmlDoc.DocumentNode.SelectSingleNode("//div[contains(@class, 'YMlKec fxKbKc')]");
+            if (priceNode == null)
+            {
+                return NotFound("Price not found.");
+            }
+
+            var priceText = priceNode.InnerText.Trim();
+            if (!decimal.TryParse(priceText.Substring(1).Replace(",", ""), out var price))
+            {
+                return BadRequest("Failed to parse price.");
+            }
+
+            var stockData = new StockDataDto
+            {
+                time = DateTime.Now,
+                price = price
+            };
+
+            return Ok(stockData);
+        }
+
+
+
+
+
+        [HttpGet("price40")]
+        public async Task<IActionResult> GetStockPriceByTicker40(string ticker, string exchange, CancellationToken cancellationToken)
+        {
+            var requestDto = new GetStockPriceRequestDto
+            {
+                Ticker = ticker,
+                Exchange = exchange
+            };
+
+            var url = $"https://www.google.com/finance/quote/{requestDto.Ticker}:{requestDto.Exchange}";
+
+            string response;
+            try
+            {
+                // Pass cancellation token to support graceful stopping.
+                response = await _httpClient.GetStringAsync(url, cancellationToken);
+            }
+            catch (OperationCanceledException)
+            {
+                // Handle cancellation gracefully.
+                return StatusCode(StatusCodes.Status503ServiceUnavailable, "Request canceled.");
+            }
+            catch (Exception ex)
+            {
+                // Handle other exceptions.
+                return StatusCode(StatusCodes.Status500InternalServerError, $"Error: {ex.Message}");
+            }
+
+            var htmlDoc = new HtmlDocument();
+            htmlDoc.LoadHtml(response);
+
+            var priceNode = htmlDoc.DocumentNode.SelectSingleNode("//div[contains(@class, 'YMlKec fxKbKc')]");
+            if (priceNode == null)
+            {
+                return NotFound("Price not found.");
+            }
+
+            var priceText = priceNode.InnerText.Trim();
+            if (!decimal.TryParse(priceText.Substring(1).Replace(",", ""), out var price))
+            {
+                return BadRequest("Failed to parse price.");
+            }
+
+            var stockData = new StockDataDto
+            {
+                time = DateTime.Now,
+                price = price
+            };
+
+            return Ok(stockData);
+        }
+
+
+        [HttpGet("price41")]
+        public async Task<IActionResult> GetStockPriceByTicker41(string ticker, string exchange, CancellationToken cancellationToken)
+        {
+            var requestDto = new GetStockPriceRequestDto
+            {
+                Ticker = ticker,
+                Exchange = exchange
+            };
+
+            var url = $"https://www.google.com/finance/quote/{requestDto.Ticker}:{requestDto.Exchange}";
+
+            string response;
+            try
+            {
+                // Pass cancellation token to support graceful stopping.
+                response = await _httpClient.GetStringAsync(url, cancellationToken);
+            }
+            catch (OperationCanceledException)
+            {
+                // Handle cancellation gracefully.
+                return StatusCode(StatusCodes.Status503ServiceUnavailable, "Request canceled.");
+            }
+            catch (Exception ex)
+            {
+                // Handle other exceptions.
+                return StatusCode(StatusCodes.Status500InternalServerError, $"Error: {ex.Message}");
+            }
+
+            var htmlDoc = new HtmlDocument();
+            htmlDoc.LoadHtml(response);
+
+            var priceNode = htmlDoc.DocumentNode.SelectSingleNode("//div[contains(@class, 'YMlKec fxKbKc')]");
+            if (priceNode == null)
+            {
+                return NotFound("Price not found.");
+            }
+
+            var priceText = priceNode.InnerText.Trim();
+            if (!decimal.TryParse(priceText.Substring(1).Replace(",", ""), out var price))
+            {
+                return BadRequest("Failed to parse price.");
+            }
+
+            var stockData = new StockDataDto
+            {
+                time = DateTime.Now,
+                price = price
+            };
+
+            return Ok(stockData);
+        }
+
+
+
+        [HttpGet("price42")]
+        public async Task<IActionResult> GetStockPriceByTicker42(string ticker, string exchange, CancellationToken cancellationToken)
+        {
+            var requestDto = new GetStockPriceRequestDto
+            {
+                Ticker = ticker,
+                Exchange = exchange
+            };
+
+            var url = $"https://www.google.com/finance/quote/{requestDto.Ticker}:{requestDto.Exchange}";
+
+            string response;
+            try
+            {
+                // Pass cancellation token to support graceful stopping.
+                response = await _httpClient.GetStringAsync(url, cancellationToken);
+            }
+            catch (OperationCanceledException)
+            {
+                // Handle cancellation gracefully.
+                return StatusCode(StatusCodes.Status503ServiceUnavailable, "Request canceled.");
+            }
+            catch (Exception ex)
+            {
+                // Handle other exceptions.
+                return StatusCode(StatusCodes.Status500InternalServerError, $"Error: {ex.Message}");
+            }
+
+            var htmlDoc = new HtmlDocument();
+            htmlDoc.LoadHtml(response);
+
+            var priceNode = htmlDoc.DocumentNode.SelectSingleNode("//div[contains(@class, 'YMlKec fxKbKc')]");
+            if (priceNode == null)
+            {
+                return NotFound("Price not found.");
+            }
+
+            var priceText = priceNode.InnerText.Trim();
+            if (!decimal.TryParse(priceText.Substring(1).Replace(",", ""), out var price))
+            {
+                return BadRequest("Failed to parse price.");
+            }
+
+            var stockData = new StockDataDto
+            {
+                time = DateTime.Now,
+                price = price
+            };
+
+            return Ok(stockData);
+        }
+
+
+
+
+        [HttpGet("price43")]
+        public async Task<IActionResult> GetStockPriceByTicker43(string ticker, string exchange, CancellationToken cancellationToken)
+        {
+            var requestDto = new GetStockPriceRequestDto
+            {
+                Ticker = ticker,
+                Exchange = exchange
+            };
+
+            var url = $"https://www.google.com/finance/quote/{requestDto.Ticker}:{requestDto.Exchange}";
+
+            string response;
+            try
+            {
+                // Pass cancellation token to support graceful stopping.
+                response = await _httpClient.GetStringAsync(url, cancellationToken);
+            }
+            catch (OperationCanceledException)
+            {
+                // Handle cancellation gracefully.
+                return StatusCode(StatusCodes.Status503ServiceUnavailable, "Request canceled.");
+            }
+            catch (Exception ex)
+            {
+                // Handle other exceptions.
+                return StatusCode(StatusCodes.Status500InternalServerError, $"Error: {ex.Message}");
+            }
+
+            var htmlDoc = new HtmlDocument();
+            htmlDoc.LoadHtml(response);
+
+            var priceNode = htmlDoc.DocumentNode.SelectSingleNode("//div[contains(@class, 'YMlKec fxKbKc')]");
+            if (priceNode == null)
+            {
+                return NotFound("Price not found.");
+            }
+
+            var priceText = priceNode.InnerText.Trim();
+            if (!decimal.TryParse(priceText.Substring(1).Replace(",", ""), out var price))
+            {
+                return BadRequest("Failed to parse price.");
+            }
+
+            var stockData = new StockDataDto
+            {
+                time = DateTime.Now,
+                price = price
+            };
+
+            return Ok(stockData);
+        }
+
+
+
+        [HttpGet("price44")]
+        public async Task<IActionResult> GetStockPriceByTicker44(string ticker, string exchange, CancellationToken cancellationToken)
+        {
+            var requestDto = new GetStockPriceRequestDto
+            {
+                Ticker = ticker,
+                Exchange = exchange
+            };
+
+            var url = $"https://www.google.com/finance/quote/{requestDto.Ticker}:{requestDto.Exchange}";
+
+            string response;
+            try
+            {
+                // Pass cancellation token to support graceful stopping.
+                response = await _httpClient.GetStringAsync(url, cancellationToken);
+            }
+            catch (OperationCanceledException)
+            {
+                // Handle cancellation gracefully.
+                return StatusCode(StatusCodes.Status503ServiceUnavailable, "Request canceled.");
+            }
+            catch (Exception ex)
+            {
+                // Handle other exceptions.
+                return StatusCode(StatusCodes.Status500InternalServerError, $"Error: {ex.Message}");
+            }
+
+            var htmlDoc = new HtmlDocument();
+            htmlDoc.LoadHtml(response);
+
+            var priceNode = htmlDoc.DocumentNode.SelectSingleNode("//div[contains(@class, 'YMlKec fxKbKc')]");
+            if (priceNode == null)
+            {
+                return NotFound("Price not found.");
+            }
+
+            var priceText = priceNode.InnerText.Trim();
+            if (!decimal.TryParse(priceText.Substring(1).Replace(",", ""), out var price))
+            {
+                return BadRequest("Failed to parse price.");
+            }
+
+            var stockData = new StockDataDto
+            {
+                time = DateTime.Now,
+                price = price
+            };
+
+            return Ok(stockData);
+        }
+
+
+
+        [HttpGet("price45")]
+        public async Task<IActionResult> GetStockPriceByTicker45(string ticker, string exchange, CancellationToken cancellationToken)
+        {
+            var requestDto = new GetStockPriceRequestDto
+            {
+                Ticker = ticker,
+                Exchange = exchange
+            };
+
+            var url = $"https://www.google.com/finance/quote/{requestDto.Ticker}:{requestDto.Exchange}";
+
+            string response;
+            try
+            {
+                // Pass cancellation token to support graceful stopping.
+                response = await _httpClient.GetStringAsync(url, cancellationToken);
+            }
+            catch (OperationCanceledException)
+            {
+                // Handle cancellation gracefully.
+                return StatusCode(StatusCodes.Status503ServiceUnavailable, "Request canceled.");
+            }
+            catch (Exception ex)
+            {
+                // Handle other exceptions.
+                return StatusCode(StatusCodes.Status500InternalServerError, $"Error: {ex.Message}");
+            }
+
+            var htmlDoc = new HtmlDocument();
+            htmlDoc.LoadHtml(response);
+
+            var priceNode = htmlDoc.DocumentNode.SelectSingleNode("//div[contains(@class, 'YMlKec fxKbKc')]");
+            if (priceNode == null)
+            {
+                return NotFound("Price not found.");
+            }
+
+            var priceText = priceNode.InnerText.Trim();
+            if (!decimal.TryParse(priceText.Substring(1).Replace(",", ""), out var price))
+            {
+                return BadRequest("Failed to parse price.");
+            }
+
+            var stockData = new StockDataDto
+            {
+                time = DateTime.Now,
+                price = price
+            };
+
+            return Ok(stockData);
+        }
+
+
+
+        [HttpGet("price46")]
+        public async Task<IActionResult> GetStockPriceByTicker46(string ticker, string exchange, CancellationToken cancellationToken)
+        {
+            var requestDto = new GetStockPriceRequestDto
+            {
+                Ticker = ticker,
+                Exchange = exchange
+            };
+
+            var url = $"https://www.google.com/finance/quote/{requestDto.Ticker}:{requestDto.Exchange}";
+
+            string response;
+            try
+            {
+                // Pass cancellation token to support graceful stopping.
+                response = await _httpClient.GetStringAsync(url, cancellationToken);
+            }
+            catch (OperationCanceledException)
+            {
+                // Handle cancellation gracefully.
+                return StatusCode(StatusCodes.Status503ServiceUnavailable, "Request canceled.");
+            }
+            catch (Exception ex)
+            {
+                // Handle other exceptions.
+                return StatusCode(StatusCodes.Status500InternalServerError, $"Error: {ex.Message}");
+            }
+
+            var htmlDoc = new HtmlDocument();
+            htmlDoc.LoadHtml(response);
+
+            var priceNode = htmlDoc.DocumentNode.SelectSingleNode("//div[contains(@class, 'YMlKec fxKbKc')]");
+            if (priceNode == null)
+            {
+                return NotFound("Price not found.");
+            }
+
+            var priceText = priceNode.InnerText.Trim();
+            if (!decimal.TryParse(priceText.Substring(1).Replace(",", ""), out var price))
+            {
+                return BadRequest("Failed to parse price.");
+            }
+
+            var stockData = new StockDataDto
+            {
+                time = DateTime.Now,
+                price = price
+            };
+
+            return Ok(stockData);
+        }
+
+
+
+
+
+        [HttpGet("price47")]
+        public async Task<IActionResult> GetStockPriceByTicker47(string ticker, string exchange, CancellationToken cancellationToken)
+        {
+            var requestDto = new GetStockPriceRequestDto
+            {
+                Ticker = ticker,
+                Exchange = exchange
+            };
+
+            var url = $"https://www.google.com/finance/quote/{requestDto.Ticker}:{requestDto.Exchange}";
+
+            string response;
+            try
+            {
+                // Pass cancellation token to support graceful stopping.
+                response = await _httpClient.GetStringAsync(url, cancellationToken);
+            }
+            catch (OperationCanceledException)
+            {
+                // Handle cancellation gracefully.
+                return StatusCode(StatusCodes.Status503ServiceUnavailable, "Request canceled.");
+            }
+            catch (Exception ex)
+            {
+                // Handle other exceptions.
+                return StatusCode(StatusCodes.Status500InternalServerError, $"Error: {ex.Message}");
+            }
+
+            var htmlDoc = new HtmlDocument();
+            htmlDoc.LoadHtml(response);
+
+            var priceNode = htmlDoc.DocumentNode.SelectSingleNode("//div[contains(@class, 'YMlKec fxKbKc')]");
+            if (priceNode == null)
+            {
+                return NotFound("Price not found.");
+            }
+
+            var priceText = priceNode.InnerText.Trim();
+            if (!decimal.TryParse(priceText.Substring(1).Replace(",", ""), out var price))
+            {
+                return BadRequest("Failed to parse price.");
+            }
+
+            var stockData = new StockDataDto
+            {
+                time = DateTime.Now,
+                price = price
+            };
+
+            return Ok(stockData);
+        }
+
+
+
+
+        [HttpGet("price48")]
+        public async Task<IActionResult> GetStockPriceByTicker48(string ticker, string exchange, CancellationToken cancellationToken)
+        {
+            var requestDto = new GetStockPriceRequestDto
+            {
+                Ticker = ticker,
+                Exchange = exchange
+            };
+
+            var url = $"https://www.google.com/finance/quote/{requestDto.Ticker}:{requestDto.Exchange}";
+
+            string response;
+            try
+            {
+                // Pass cancellation token to support graceful stopping.
+                response = await _httpClient.GetStringAsync(url, cancellationToken);
+            }
+            catch (OperationCanceledException)
+            {
+                // Handle cancellation gracefully.
+                return StatusCode(StatusCodes.Status503ServiceUnavailable, "Request canceled.");
+            }
+            catch (Exception ex)
+            {
+                // Handle other exceptions.
+                return StatusCode(StatusCodes.Status500InternalServerError, $"Error: {ex.Message}");
+            }
+
+            var htmlDoc = new HtmlDocument();
+            htmlDoc.LoadHtml(response);
+
+            var priceNode = htmlDoc.DocumentNode.SelectSingleNode("//div[contains(@class, 'YMlKec fxKbKc')]");
+            if (priceNode == null)
+            {
+                return NotFound("Price not found.");
+            }
+
+            var priceText = priceNode.InnerText.Trim();
+            if (!decimal.TryParse(priceText.Substring(1).Replace(",", ""), out var price))
+            {
+                return BadRequest("Failed to parse price.");
+            }
+
+            var stockData = new StockDataDto
+            {
+                time = DateTime.Now,
+                price = price
+            };
+
+            return Ok(stockData);
+        }
+
+
+
+
+
+        [HttpGet("price49")]
+        public async Task<IActionResult> GetStockPriceByTicker49(string ticker, string exchange, CancellationToken cancellationToken)
+        {
+            var requestDto = new GetStockPriceRequestDto
+            {
+                Ticker = ticker,
+                Exchange = exchange
+            };
+
+            var url = $"https://www.google.com/finance/quote/{requestDto.Ticker}:{requestDto.Exchange}";
+
+            string response;
+            try
+            {
+                // Pass cancellation token to support graceful stopping.
+                response = await _httpClient.GetStringAsync(url, cancellationToken);
+            }
+            catch (OperationCanceledException)
+            {
+                // Handle cancellation gracefully.
+                return StatusCode(StatusCodes.Status503ServiceUnavailable, "Request canceled.");
+            }
+            catch (Exception ex)
+            {
+                // Handle other exceptions.
+                return StatusCode(StatusCodes.Status500InternalServerError, $"Error: {ex.Message}");
+            }
+
+            var htmlDoc = new HtmlDocument();
+            htmlDoc.LoadHtml(response);
+
+            var priceNode = htmlDoc.DocumentNode.SelectSingleNode("//div[contains(@class, 'YMlKec fxKbKc')]");
+            if (priceNode == null)
+            {
+                return NotFound("Price not found.");
+            }
+
+            var priceText = priceNode.InnerText.Trim();
+            if (!decimal.TryParse(priceText.Substring(1).Replace(",", ""), out var price))
+            {
+                return BadRequest("Failed to parse price.");
+            }
+
+            var stockData = new StockDataDto
+            {
+                time = DateTime.Now,
+                price = price
+            };
+
+            return Ok(stockData);
+        }
+
+
+
+        [HttpGet("price50")]
+        public async Task<IActionResult> GetStockPriceByTicker50(string ticker, string exchange, CancellationToken cancellationToken)
+        {
+            var requestDto = new GetStockPriceRequestDto
+            {
+                Ticker = ticker,
+                Exchange = exchange
+            };
+
+            var url = $"https://www.google.com/finance/quote/{requestDto.Ticker}:{requestDto.Exchange}";
+
+            string response;
+            try
+            {
+                // Pass cancellation token to support graceful stopping.
+                response = await _httpClient.GetStringAsync(url, cancellationToken);
+            }
+            catch (OperationCanceledException)
+            {
+                // Handle cancellation gracefully.
+                return StatusCode(StatusCodes.Status503ServiceUnavailable, "Request canceled.");
+            }
+            catch (Exception ex)
+            {
+                // Handle other exceptions.
+                return StatusCode(StatusCodes.Status500InternalServerError, $"Error: {ex.Message}");
+            }
+
+            var htmlDoc = new HtmlDocument();
+            htmlDoc.LoadHtml(response);
+
+            var priceNode = htmlDoc.DocumentNode.SelectSingleNode("//div[contains(@class, 'YMlKec fxKbKc')]");
+            if (priceNode == null)
+            {
+                return NotFound("Price not found.");
+            }
+
+            var priceText = priceNode.InnerText.Trim();
+            if (!decimal.TryParse(priceText.Substring(1).Replace(",", ""), out var price))
+            {
+                return BadRequest("Failed to parse price.");
+            }
+
+            var stockData = new StockDataDto
+            {
+                time = DateTime.Now,
+                price = price
+            };
+
+            return Ok(stockData);
+        }
 
 
 
