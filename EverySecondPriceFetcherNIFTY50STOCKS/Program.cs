@@ -1,4 +1,5 @@
 using EverySecondPriceFetcherNIFTY50STOCKS.Controllers.BackGroundService;
+using EverySecondPriceFetcherNIFTY50STOCKS.Controllers.StratergicServices;
 using EverySecondPriceFetcherNIFTY50STOCKS.Model;
 using Microsoft.EntityFrameworkCore;
 
@@ -15,6 +16,8 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddHttpClient();
 
 builder.Services.AddHostedService<StockPriceFetcherService>();
+builder.Services.AddHostedService<ThreeWhiteSoilders>();
+//builder.Services.AddHostedService<ThreeWhiteSoilders>();
 //builder.Services.AddHostedService<StockPriceFetcherService2>();
 //builder.Services.AddHostedService<StockPriceFetcherService3>();
 //builder.Services.AddHostedService<StockPriceFetcherService4>();

@@ -19,9 +19,10 @@ namespace EverySecondPriceFetcherNIFTY50STOCKS.Controllers
         }
 
 
-        // GET: https://localhost:7237/api/StockPricePerSec/GetForCandel?ticker=INFY
-        [HttpGet("GetForCandel")]
-        public async Task<ActionResult<IEnumerable<List<Candel>>>> MakeCandel([FromQuery] string ticker)
+        //1 MIN
+        // GET: https://localhost:7237/api/StockPricePerSec/GetCandel?ticker=INFY
+        [HttpGet("GetCandel")]
+        public async Task<IActionResult> MakeMinCandel([FromQuery] string ticker)
         {
             // Fetch data from the database based on the ticker
             var query = _context.StockPricePerSec
@@ -32,8 +33,14 @@ namespace EverySecondPriceFetcherNIFTY50STOCKS.Controllers
 
             // Grouping stock prices by minute (rounded to the nearest minute)
             var groupedResult = result
-                                .GroupBy(sp => new DateTime(sp.StockDateTime.Year, sp.StockDateTime.Month, sp.StockDateTime.Day, sp.StockDateTime.Hour, sp.StockDateTime.Minute, 0))
-                                .Select(g => g.ToList()) // Create a list for each group
+                                .GroupBy(sp => new DateTime(
+                                    sp.StockDateTime.Year,
+                                    sp.StockDateTime.Month,
+                                    sp.StockDateTime.Day,
+                                    sp.StockDateTime.Hour,
+                                    sp.StockDateTime.Minute,
+                                    0))
+                                .Select(g => g.ToList())
                                 .ToList();
 
             StockPricePerSec firstStockPrice = null;
@@ -73,19 +80,21 @@ namespace EverySecondPriceFetcherNIFTY50STOCKS.Controllers
 
                     CandelList.Add(CandelPayLoad);
                 }
-
             }
 
-            // Return the list of lists containing stock prices per minute
-            return Ok(CandelList);
+            // Return the list of candles in JSON format
+            return new JsonResult(CandelList);
         }
+
+
+
 
 
 
         //5 MIN
         // GET: https://localhost:7237/api/StockPricePerSec/Get5MinCandel?ticker=INFY
         [HttpGet("Get5MinCandel")]
-        public async Task<ActionResult<IEnumerable<List<Candel>>>> Make5MinCandel([FromQuery] string ticker)
+        public async Task<IActionResult> Make5MinCandel([FromQuery] string ticker)
         {
             // Fetch data from the database based on the ticker
             var query = _context.StockPricePerSec
@@ -105,7 +114,6 @@ namespace EverySecondPriceFetcherNIFTY50STOCKS.Controllers
                     0))
                 .Select(g => g.ToList())
                 .ToList();
-
 
             StockPricePerSec firstStockPrice = null;
             StockPricePerSec highestStockPrice = null;
@@ -144,19 +152,17 @@ namespace EverySecondPriceFetcherNIFTY50STOCKS.Controllers
 
                     CandelList.Add(CandelPayLoad);
                 }
-
             }
 
-            // Return the list of lists containing stock prices per minute
-            return Ok(CandelList);
+            // Return the list of candles in JSON format
+            return new JsonResult(CandelList);
         }
-
 
 
         //10 MIN
         // GET: https://localhost:7237/api/StockPricePerSec/Get10MinCandel?ticker=INFY
         [HttpGet("Get10MinCandel")]
-        public async Task<ActionResult<IEnumerable<List<Candel>>>> Make10MinCandel([FromQuery] string ticker)
+        public async Task<IActionResult> Make10MinCandel([FromQuery] string ticker)
         {
             // Fetch data from the database based on the ticker
             var query = _context.StockPricePerSec
@@ -165,7 +171,7 @@ namespace EverySecondPriceFetcherNIFTY50STOCKS.Controllers
 
             var result = await query.ToListAsync();
 
-            // Grouping stock prices by minute (rounded to the nearest minute)
+            // Grouping stock prices by minute (rounded to the nearest 10 minutes)
             var groupedBy10Min = result
                 .GroupBy(sp => new DateTime(
                     sp.StockDateTime.Year,
@@ -177,30 +183,23 @@ namespace EverySecondPriceFetcherNIFTY50STOCKS.Controllers
                 .Select(g => g.ToList())
                 .ToList();
 
-
-
-            StockPricePerSec firstStockPrice = null;
-            StockPricePerSec highestStockPrice = null;
-            StockPricePerSec lowestStockPrice = null;
-            StockPricePerSec lastStockPrice = null;
-
             List<Candel> CandelList = new List<Candel>();
 
             if (groupedBy10Min != null)
             {
-                foreach (List<StockPricePerSec> sp in groupedBy10Min)
+                foreach (var sp in groupedBy10Min)
                 {
-                    firstStockPrice = GetFirstStockPrice(sp);
-                    highestStockPrice = GetHighestStockPrice(sp);
-                    lowestStockPrice = GetLowestStockPrice(sp);
-                    lastStockPrice = GetLastStockPrice(sp);
+                    var firstStockPrice = GetFirstStockPrice(sp);
+                    var highestStockPrice = GetHighestStockPrice(sp);
+                    var lowestStockPrice = GetLowestStockPrice(sp);
+                    var lastStockPrice = GetLastStockPrice(sp);
 
                     var CandelPayLoad = new Candel
                     {
-                        StartPrice = firstStockPrice.StockPrice,  // Use the first price from the list
-                        HighestPrice = highestStockPrice.StockPrice, // Get the highest price from the list
-                        LowestPrice = lowestStockPrice.StockPrice,  // Get the lowest price from the list
-                        EndPrice = lastStockPrice.StockPrice,     // Use the last price from the list
+                        StartPrice = firstStockPrice.StockPrice,
+                        HighestPrice = highestStockPrice.StockPrice,
+                        LowestPrice = lowestStockPrice.StockPrice,
+                        EndPrice = lastStockPrice.StockPrice,
 
                         OpenTime = firstStockPrice.StockDateTime,
                         CloseTime = lastStockPrice.StockDateTime,
@@ -210,24 +209,21 @@ namespace EverySecondPriceFetcherNIFTY50STOCKS.Controllers
                         Exchange = "NSE",
                     };
 
-                    // Set the BullBear status based on your logic
                     CandelPayLoad.SetBullBearStatus();
                     CandelPayLoad.SetPriceChange();
 
                     CandelList.Add(CandelPayLoad);
                 }
-
             }
 
-            // Return the list of lists containing stock prices per minute
-            return Ok(CandelList);
+            return new JsonResult(CandelList);
         }
 
 
         //15 MIN
         // GET: https://localhost:7237/api/StockPricePerSec/Get15MinCandel?ticker=INFY
         [HttpGet("Get15MinCandel")]
-        public async Task<ActionResult<IEnumerable<List<Candel>>>> Make15MinCandel([FromQuery] string ticker)
+        public async Task<IActionResult> Make15MinCandel([FromQuery] string ticker)
         {
             // Fetch data from the database based on the ticker
             var query = _context.StockPricePerSec
@@ -236,7 +232,7 @@ namespace EverySecondPriceFetcherNIFTY50STOCKS.Controllers
 
             var result = await query.ToListAsync();
 
-            // Grouping stock prices by minute (rounded to the nearest minute)
+            // Grouping stock prices by minute (rounded to the nearest 15 minutes)
             var groupedBy15Min = result
                 .GroupBy(sp => new DateTime(
                     sp.StockDateTime.Year,
@@ -248,28 +244,23 @@ namespace EverySecondPriceFetcherNIFTY50STOCKS.Controllers
                 .Select(g => g.ToList())
                 .ToList();
 
-            StockPricePerSec firstStockPrice = null;
-            StockPricePerSec highestStockPrice = null;
-            StockPricePerSec lowestStockPrice = null;
-            StockPricePerSec lastStockPrice = null;
-
             List<Candel> CandelList = new List<Candel>();
 
             if (groupedBy15Min != null)
             {
-                foreach (List<StockPricePerSec> sp in groupedBy15Min)
+                foreach (var sp in groupedBy15Min)
                 {
-                    firstStockPrice = GetFirstStockPrice(sp);
-                    highestStockPrice = GetHighestStockPrice(sp);
-                    lowestStockPrice = GetLowestStockPrice(sp);
-                    lastStockPrice = GetLastStockPrice(sp);
+                    var firstStockPrice = GetFirstStockPrice(sp);
+                    var highestStockPrice = GetHighestStockPrice(sp);
+                    var lowestStockPrice = GetLowestStockPrice(sp);
+                    var lastStockPrice = GetLastStockPrice(sp);
 
                     var CandelPayLoad = new Candel
                     {
-                        StartPrice = firstStockPrice.StockPrice,  // Use the first price from the list
-                        HighestPrice = highestStockPrice.StockPrice, // Get the highest price from the list
-                        LowestPrice = lowestStockPrice.StockPrice,  // Get the lowest price from the list
-                        EndPrice = lastStockPrice.StockPrice,     // Use the last price from the list
+                        StartPrice = firstStockPrice.StockPrice,
+                        HighestPrice = highestStockPrice.StockPrice,
+                        LowestPrice = lowestStockPrice.StockPrice,
+                        EndPrice = lastStockPrice.StockPrice,
 
                         OpenTime = firstStockPrice.StockDateTime,
                         CloseTime = lastStockPrice.StockDateTime,
@@ -279,17 +270,14 @@ namespace EverySecondPriceFetcherNIFTY50STOCKS.Controllers
                         Exchange = "NSE",
                     };
 
-                    // Set the BullBear status based on your logic
                     CandelPayLoad.SetBullBearStatus();
                     CandelPayLoad.SetPriceChange();
 
                     CandelList.Add(CandelPayLoad);
                 }
-
             }
 
-            // Return the list of lists containing stock prices per minute
-            return Ok(CandelList);
+            return new JsonResult(CandelList);
         }
 
 
