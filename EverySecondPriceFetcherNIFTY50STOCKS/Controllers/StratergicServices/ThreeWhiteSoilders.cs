@@ -11,7 +11,10 @@ namespace EverySecondPriceFetcherNIFTY50STOCKS.Controllers.StratergicServices
     {
         private readonly HttpClient _httpClient;
         private readonly List<(string ticker, string exchange, string name, long id)> _stocks;
-        public List<List<Candel>> MasterCandelList = new List<List<Candel>>();
+        public List<List<Candel>> MasterCandelListFor1MinCandel3WS = new List<List<Candel>>();
+        public List<List<Candel>> MasterCandelListFor5MinCandel3WS = new List<List<Candel>>();
+        public List<List<Candel>> MasterCandelListFor10MinCandel3WS = new List<List<Candel>>();
+        public List<List<Candel>> MasterCandelListFor15MinCandel3WS = new List<List<Candel>>();
 
         public ThreeWhiteSoilders(HttpClient httpClient)
         {
@@ -35,7 +38,7 @@ namespace EverySecondPriceFetcherNIFTY50STOCKS.Controllers.StratergicServices
             };
         }
 
-        public async void ThreeWhiteSoilderAnalyzer(List<Candel> candelList)
+        public async void ThreeWhiteSoilderAnalyzer(List<Candel> candelList, int Range)
         {
             // Ensure there are at least 4 candles in the list
             if (candelList.Count < 4)
@@ -76,7 +79,22 @@ namespace EverySecondPriceFetcherNIFTY50STOCKS.Controllers.StratergicServices
             if (allThreeBullish && progressiveCloses && increasingBodySize && smallUpperShadow && smallLowerShadow &&
                 strongBodyRatio && priorConsolidationOrBearish)
             {
-                MasterCandelList.Add(candelList);
+                if (Range == 1)
+                {
+                    MasterCandelListFor1MinCandel3WS.Add(candelList);
+                }
+                else if(Range == 5)
+                {
+                    MasterCandelListFor5MinCandel3WS.Add(candelList);
+                }
+                else if (Range == 10)
+                {
+                    MasterCandelListFor10MinCandel3WS.Add(candelList);
+                }
+                else if (Range == 15)
+                {
+                    MasterCandelListFor15MinCandel3WS.Add(candelList);
+                }
             }
             else
             {
@@ -98,9 +116,12 @@ namespace EverySecondPriceFetcherNIFTY50STOCKS.Controllers.StratergicServices
                     try
                     {
 
+                        //FOR 1 MIN CANDEL 3WS ANALYZER
+
                         // Call the API and get the response as a string
                         HttpResponseMessage response = await _httpClient.GetAsync($"https://localhost:7237/api/StockPricePerSec/GetCandel?ticker={stock.ticker}", stoppingToken);
                         response.EnsureSuccessStatusCode();
+
                         string responseData = await response.Content.ReadAsStringAsync(stoppingToken);
 
                         // Deserialize the JSON response into a list of Candel objects
@@ -109,9 +130,30 @@ namespace EverySecondPriceFetcherNIFTY50STOCKS.Controllers.StratergicServices
                         // Store the candles in a variable (for future use)
                         if (candels != null)
                         {
-                            List<Candel> lastThreeCandels = candels.TakeLast(4).ToList();
-                            ThreeWhiteSoilderAnalyzer(lastThreeCandels);
+                            var lastFourCandels = candels.TakeLast(4).ToList();
+                            ThreeWhiteSoilderAnalyzer(lastFourCandels , 1);
                         }
+
+
+
+
+                        //FOR 5 MIN CANDEL 3WS ANALYZER
+
+                        // Call the API and get the response as a string
+                        HttpResponseMessage response5 = await _httpClient.GetAsync($"https://localhost:7237/api/StockPricePerSec/Get5MinCandel?ticker={stock.ticker}", stoppingToken);
+                        response5.EnsureSuccessStatusCode();
+                        string responseData5 = await response5.Content.ReadAsStringAsync(stoppingToken);
+                        // Deserialize the JSON response into a list of Candel objects
+                        List<Candel> candels5 = JsonConvert.DeserializeObject<List<Candel>>(responseData5);
+                        // Store the candles in a variable (for future use)
+                        if (candels5 != null)
+                        {
+                            var lastFourCandels = candels5.TakeLast(4).ToList();
+                            ThreeWhiteSoilderAnalyzer(lastFourCandels, 5);
+                        }
+
+
+
                     }
                     catch (Exception ex)
                     {

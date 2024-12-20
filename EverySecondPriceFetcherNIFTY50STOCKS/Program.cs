@@ -17,10 +17,6 @@ builder.Services.AddHttpClient();
 
 builder.Services.AddHostedService<StockPriceFetcherService>();
 builder.Services.AddHostedService<ThreeWhiteSoilders>();
-//builder.Services.AddHostedService<ThreeWhiteSoilders>();
-//builder.Services.AddHostedService<StockPriceFetcherService2>();
-//builder.Services.AddHostedService<StockPriceFetcherService3>();
-//builder.Services.AddHostedService<StockPriceFetcherService4>();
 
 var app = builder.Build();
 
