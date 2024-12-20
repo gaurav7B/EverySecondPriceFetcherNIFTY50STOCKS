@@ -47,7 +47,6 @@ namespace EverySecondPriceFetcherNIFTY50STOCKS.Controllers.BackGroundService
 
             List<double> iterationTimes = new();
 
-
             while (!stoppingToken.IsCancellationRequested)
             {
                 var stopwatch = Stopwatch.StartNew();
@@ -56,7 +55,9 @@ namespace EverySecondPriceFetcherNIFTY50STOCKS.Controllers.BackGroundService
                 {
                     try
                     {
-                        var response = await _httpClient.GetAsync($"https://localhost:7237/api/Stock/price{stock.id}?ticker={stock.ticker}&exchange={stock.exchange}", stoppingToken);
+                        using var response = await _httpClient.GetAsync(
+                            $"https://localhost:7237/api/Stock/price{stock.id}?ticker={stock.ticker}&exchange={stock.exchange}",
+                            stoppingToken);
 
                         if (response.IsSuccessStatusCode)
                         {
@@ -73,8 +74,13 @@ namespace EverySecondPriceFetcherNIFTY50STOCKS.Controllers.BackGroundService
                                     StockPrice = stockData.price
                                 };
 
-                                var jsonContent = new StringContent(JsonSerializer.Serialize(stockPrice), Encoding.UTF8, "application/json");
-                                var postResponse = await _httpClient.PostAsync($"https://localhost:7237/api/StockPricePerSec/addStockPrice{stock.id}", jsonContent, stoppingToken);
+                                var jsonContent = new StringContent(
+                                    JsonSerializer.Serialize(stockPrice), Encoding.UTF8, "application/json");
+
+                                using var postResponse = await _httpClient.PostAsync(
+                                    $"https://localhost:7237/api/StockPricePerSec/addStockPrice{stock.id}",
+                                    jsonContent,
+                                    stoppingToken);
 
                                 if (!postResponse.IsSuccessStatusCode)
                                 {
@@ -98,11 +104,15 @@ namespace EverySecondPriceFetcherNIFTY50STOCKS.Controllers.BackGroundService
 
                 stopwatch.Stop();
                 iterationTimes.Add(stopwatch.Elapsed.TotalMilliseconds);
+
+                // Trigger garbage collection periodically
+                GC.Collect();
+                GC.WaitForPendingFinalizers();
             }
 
             _logger.LogInformation("Stock price fetcher service stopped.");
         }
 
-
     }
 }
+

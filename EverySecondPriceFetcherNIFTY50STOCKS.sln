@@ -1,9 +1,11 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
-VisualStudioVersion = 17.12.35506.116 d17.12
+VisualStudioVersion = 17.12.35506.116
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EverySecondPriceFetcherNIFTY50STOCKS", "EverySecondPriceFetcherNIFTY50STOCKS\EverySecondPriceFetcherNIFTY50STOCKS.csproj", "{964280D6-DA4E-4113-BF7F-25D22C23281B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CandelMakerServices", "CandelMakerServices\CandelMakerServices.csproj", "{6A4CD30F-5C96-4A14-85B0-ABB6403986BF}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +17,10 @@ Global
 		{964280D6-DA4E-4113-BF7F-25D22C23281B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{964280D6-DA4E-4113-BF7F-25D22C23281B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{964280D6-DA4E-4113-BF7F-25D22C23281B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6A4CD30F-5C96-4A14-85B0-ABB6403986BF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6A4CD30F-5C96-4A14-85B0-ABB6403986BF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6A4CD30F-5C96-4A14-85B0-ABB6403986BF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6A4CD30F-5C96-4A14-85B0-ABB6403986BF}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
