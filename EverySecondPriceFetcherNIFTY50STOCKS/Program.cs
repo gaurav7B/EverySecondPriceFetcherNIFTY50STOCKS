@@ -15,8 +15,9 @@ builder.Services.AddSwaggerGen();
 
 builder.Services.AddHttpClient();
 
-builder.Services.AddHostedService<StockPriceFetcherService>();
-builder.Services.AddHostedService<ThreeWhiteSoilders>();
+//builder.Services.AddHostedService<StockPriceFetcherService>();
+
+//builder.Services.AddHostedService<ThreeWhiteSoilders>();
 
 var app = builder.Build();
 

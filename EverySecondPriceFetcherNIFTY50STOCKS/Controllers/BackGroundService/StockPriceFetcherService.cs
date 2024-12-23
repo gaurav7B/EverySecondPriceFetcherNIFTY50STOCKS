@@ -7,9 +7,8 @@ using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
-using EverySecondPriceFetcherNIFTY50STOCKS.Model;
 using System.Diagnostics;
+using EverySecondPriceFetcherNIFTY50STOCKS.Model;
 
 namespace EverySecondPriceFetcherNIFTY50STOCKS.Controllers.BackGroundService
 {
@@ -25,24 +24,22 @@ namespace EverySecondPriceFetcherNIFTY50STOCKS.Controllers.BackGroundService
             _stocks = new List<(string, string, string, long)>
             {
                 ("INFY", "NSE", "Infosys", 1),
-                ("RELIANCE", "NSE", "Reliance Industries", 2),
-                ("TCS", "NSE", "Tata Consultancy Services", 3),
-                ("HDFCBANK", "NSE", "HDFC Bank", 4),
-                ("ICICIBANK", "NSE", "ICICI Bank", 5),
-                ("HINDUNILVR", "NSE", "Hindustan Unilever", 6),
-                ("ITC", "NSE", "ITC Limited", 7),
-                ("KOTAKBANK", "NSE", "Kotak Mahindra Bank", 8),
-                ("LT", "NSE", "Larsen & Toubro", 9),
-                ("SBIN", "NSE", "State Bank of India", 10),
-                ("AXISBANK", "NSE", "Axis Bank", 11),
-                ("BAJFINANCE", "NSE", "Bajaj Finance", 12)
-
+              //("RELIANCE", "NSE", "Reliance Industries", 2),
+              //("TCS", "NSE", "Tata Consultancy Services", 3),
+              //("HDFCBANK", "NSE", "HDFC Bank", 4),
+              //("ICICIBANK", "NSE", "ICICI Bank", 5),
+              //("HINDUNILVR", "NSE", "Hindustan Unilever", 6),
+              //("ITC", "NSE", "ITC Limited", 7),
+              //("KOTAKBANK", "NSE", "Kotak Mahindra Bank", 8),
+              //("LT", "NSE", "Larsen & Toubro", 9),
+              //("SBIN", "NSE", "State Bank of India", 10),
+              //("AXISBANK", "NSE", "Axis Bank", 11),
+              //("BAJFINANCE", "NSE", "Bajaj Finance", 12)
             };
         }
 
         protected override async Task ExecuteAsync(CancellationToken stoppingToken)
         {
-
             List<double> iterationTimes = new();
 
             while (!stoppingToken.IsCancellationRequested)
@@ -50,66 +47,67 @@ namespace EverySecondPriceFetcherNIFTY50STOCKS.Controllers.BackGroundService
                 var stopwatch = Stopwatch.StartNew();
 
                 var tasks = _stocks.Select(stock => Task.Run(async () =>
+                {
+                    try
                     {
-                        try
+                        using var response = await _httpClient.GetAsync(
+                            $"https://localhost:7237/api/Stock/price{stock.id}?ticker={stock.ticker}&exchange={stock.exchange}",
+                            stoppingToken);
+
+                        if (response.IsSuccessStatusCode)
                         {
-                            using var response = await _httpClient.GetAsync(
-                                $"https://localhost:7237/api/Stock/price{stock.id}?ticker={stock.ticker}&exchange={stock.exchange}",
-                                stoppingToken);
+                            var content = await response.Content.ReadAsStringAsync(stoppingToken);
+                            var stockData = JsonSerializer.Deserialize<StockDataDto>(content);
 
-                            if (response.IsSuccessStatusCode)
+                            if (stockData != null)
                             {
-                                var content = await response.Content.ReadAsStringAsync(stoppingToken);
-                                var stockData = JsonSerializer.Deserialize<StockDataDto>(content);
-
-                                if (stockData != null)
+                                var stockPrice = new StockPricePerSec
                                 {
-                                    var stockPrice = new StockPricePerSec
-                                    {
-                                        Ticker = stock.ticker,
-                                        TickerId = stock.id,
-                                        StockDateTime = stockData.time,
-                                        StockPrice = stockData.price
-                                    };
+                                    Ticker = stock.ticker,
+                                    TickerId = stock.id,
+                                    StockDateTime = stockData.time,
+                                    StockPrice = stockData.price
+                                };
 
-                                    var jsonContent = new StringContent(
-                                        JsonSerializer.Serialize(stockPrice), Encoding.UTF8, "application/json");
+                                var jsonContent = new StringContent(
+                                    JsonSerializer.Serialize(stockPrice), Encoding.UTF8, "application/json");
 
-                                    using var postResponse = await _httpClient.PostAsync(
-                                        $"https://localhost:7237/api/StockPricePerSec/addStockPrice{stock.id}",
-                                        jsonContent,
-                                        stoppingToken);
+                                using var postResponse = await _httpClient.PostAsync(
+                                    $"https://localhost:7237/api/StockPricePerSec/addStockPrice{stock.id}",
+                                    jsonContent,
+                                    stoppingToken);
 
-                                    if (!postResponse.IsSuccessStatusCode)
-                                    {
-                                    }
+                                if (!postResponse.IsSuccessStatusCode)
+                                {
+                                    // Log the failure
                                 }
                             }
-                            else
-                            {
-                            }
                         }
-                        catch (Exception ex)
+                        else
                         {
+                            // Log the failure
                         }
-                    }, stoppingToken));
+                    }
+                    catch (Exception ex)
+                    {
+                        // Log the exception
+                    }
+                }, stoppingToken));
 
+                // Wait for all tasks to complete.
+                await Task.WhenAll(tasks);
+                stopwatch.Stop();
 
+                iterationTimes.Add(stopwatch.Elapsed.TotalMilliseconds);
 
-                    // Wait for all tasks to complete.
-                    await Task.WhenAll(tasks);
+                // Trigger garbage collection periodically
+                GC.Collect();
+                GC.WaitForPendingFinalizers();
 
-                    stopwatch.Stop();
-                    iterationTimes.Add(stopwatch.Elapsed.TotalMilliseconds);
-
-                    // Trigger garbage collection periodically
-                    GC.Collect();
-                    GC.WaitForPendingFinalizers();
-
+                // Delay for half a second
+                await Task.Delay(20, stoppingToken);
             }
-
         }
-
     }
 
 }

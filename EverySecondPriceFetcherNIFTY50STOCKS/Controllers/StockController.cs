@@ -27,30 +27,14 @@ namespace EverySecondPriceFetcherNIFTY50STOCKS.Controllers
             var url = $"https://www.google.com/finance/quote/{requestDto.Ticker}:{requestDto.Exchange}";
 
             string response;
-            try
-            {
+
                 // Pass cancellation token to support graceful stopping.
                 response = await _httpClient.GetStringAsync(url, cancellationToken);
-            }
-            catch (OperationCanceledException)
-            {
-                // Handle cancellation gracefully.
-                return StatusCode(StatusCodes.Status503ServiceUnavailable, "Request canceled.");
-            }
-            catch (Exception ex)
-            {
-                // Handle other exceptions.
-                return StatusCode(StatusCodes.Status500InternalServerError, $"Error: {ex.Message}");
-            }
 
             var htmlDoc = new HtmlDocument();
             htmlDoc.LoadHtml(response);
 
             var priceNode = htmlDoc.DocumentNode.SelectSingleNode("//div[contains(@class, 'YMlKec fxKbKc')]");
-            if (priceNode == null)
-            {
-                return NotFound("Price not found.");
-            }
 
             var priceText = priceNode.InnerText.Trim();
             if (!decimal.TryParse(priceText.Substring(1).Replace(",", ""), out var price))
