@@ -26,9 +26,15 @@ builder.Services.AddHttpClient<StockPriceFetcherService2>(client =>
     client.BaseAddress = new Uri("https://localhost:6001"); // Base address for StockPriceFetcherService2 on port 6001
 });
 
+builder.Services.AddHttpClient<StockPriceFetcherService3>(client =>
+{
+    client.BaseAddress = new Uri("https://localhost:6002"); // Base address for StockPriceFetcherService2 on port 6001
+});
+
 // Register background services
 builder.Services.AddHostedService<StockPriceFetcherService>();
 builder.Services.AddHostedService<StockPriceFetcherService2>();
+builder.Services.AddHostedService<StockPriceFetcherService3>();
 builder.Services.AddHostedService<ThreeWhiteSoilders>();
 
 var app = builder.Build();
