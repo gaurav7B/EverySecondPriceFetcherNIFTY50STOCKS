@@ -1,14 +1,16 @@
-﻿using System;
+﻿
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
 using System.Text;
-using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Hosting;
+using HtmlAgilityPack; // Make sure to include this package via NuGet
 using System.Diagnostics;
 using EverySecondPriceFetcherNIFTY50STOCKS.Model;
+using System.Text.Json;
 
 namespace EverySecondPriceFetcherNIFTY50STOCKS.Controllers.BackGroundService
 {
@@ -23,25 +25,8 @@ namespace EverySecondPriceFetcherNIFTY50STOCKS.Controllers.BackGroundService
 
             _stocks = new List<(string, string, string, long)>
             {
-                //("JSWSTEEL", "NSE", "JSW Steel", 31),
-                //("ADANIENT", "NSE", "Adani Enterprises", 32),
                 ("BPCL", "NSE", "Bharat Petroleum Corporation", 33),
-                //("INDUSINDBK", "NSE", "IndusInd Bank", 34),
-                //("CIPLA", "NSE", "Cipla", 35),
-                //("DRREDDY", "NSE", "Dr. Reddy's Laboratories", 36),
-                //("ADANIPORTS", "NSE", "Adani Ports and SEZ", 37),
-                //("GRASIM", "NSE", "Grasim Industries", 38),
-                //("HEROMOTOCO", "NSE", "Hero MotoCorp", 39),
-                //("EICHERMOT", "NSE", "Eicher Motors", 40),
-                //("COALINDIA", "NSE", "Coal India", 41),
-                //("TATAMOTORS", "NSE", "Tata Motors", 42),
-                //("SHREECEM", "NSE", "Shree Cement", 43),
-                //("APOLLOHOSP", "NSE", "Apollo Hospitals", 44),
-                //("BRITANNIA", "NSE", "Britannia Industries", 45),
-                //("UPL", "NSE", "UPL Limited", 46),
-                //("PIDILITIND", "NSE", "Pidilite Industries", 47),
-                //("VEDL", "NSE", "Vedanta", 48),
-                //("BAJAJAUTO", "NSE", "Bajaj Auto", 49)
+                // Add other stocks as necessary
             };
         }
 
@@ -57,17 +42,30 @@ namespace EverySecondPriceFetcherNIFTY50STOCKS.Controllers.BackGroundService
                 {
                     try
                     {
-                        using var response = await _httpClient.GetAsync(
-                            $"https://localhost:7237/api/Stock/price{stock.id}?ticker={stock.ticker}&exchange={stock.exchange}",
-                            stoppingToken);
+                        // Using the logic from your provided code to fetch the stock price from Google Finance
+                        var url = $"https://www.google.com/finance/quote/{stock.ticker}:{stock.exchange}";
 
-                        if (response.IsSuccessStatusCode)
+                        // Fetch the page content
+                        var response = await _httpClient.GetStringAsync(url, stoppingToken);
+
+                        var htmlDoc = new HtmlDocument();
+                        htmlDoc.LoadHtml(response);
+
+                        // Parse the stock price
+                        var priceNode = htmlDoc.DocumentNode.SelectSingleNode("//div[contains(@class, 'YMlKec fxKbKc')]");
+
+                        if (priceNode != null)
                         {
-                            var content = await response.Content.ReadAsStringAsync(stoppingToken);
-                            var stockData = JsonSerializer.Deserialize<StockDataDto>(content);
-
-                            if (stockData != null)
+                            var priceText = priceNode.InnerText.Trim();
+                            if (decimal.TryParse(priceText.Substring(1).Replace(",", ""), out var price)) // Remove the currency symbol and commas
                             {
+                                // Prepare stock data to store
+                                var stockData = new StockDataDto
+                                {
+                                    time = DateTime.Now,
+                                    price = (decimal)(double)price // Casting to double to fit the existing model
+                                };
+
                                 var stockPrice = new StockPricePerSec
                                 {
                                     Ticker = stock.ticker,
@@ -89,10 +87,14 @@ namespace EverySecondPriceFetcherNIFTY50STOCKS.Controllers.BackGroundService
                                     // Log the failure
                                 }
                             }
+                            else
+                            {
+                                // Log the failure in parsing the price
+                            }
                         }
                         else
                         {
-                            // Log the failure
+                            // Log the failure if the price node is not found
                         }
                     }
                     catch (Exception ex)
@@ -111,10 +113,10 @@ namespace EverySecondPriceFetcherNIFTY50STOCKS.Controllers.BackGroundService
                 GC.Collect();
                 GC.WaitForPendingFinalizers();
 
-                // Delay for half a second
+                // Delay for half a second (if needed)
                 //await Task.Delay(20, stoppingToken);
             }
         }
     }
-
 }
+
