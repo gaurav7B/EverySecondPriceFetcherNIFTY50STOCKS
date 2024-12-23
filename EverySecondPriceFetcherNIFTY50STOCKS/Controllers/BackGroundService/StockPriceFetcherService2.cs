@@ -12,19 +12,19 @@ using EverySecondPriceFetcherNIFTY50STOCKS.Model;
 
 namespace EverySecondPriceFetcherNIFTY50STOCKS.Controllers.BackGroundService
 {
-    public class StockPriceFetcherService : BackgroundService
+    public class StockPriceFetcherService2 : BackgroundService
     {
         private readonly HttpClient _httpClient;
         private readonly List<(string ticker, string exchange, string name, long id)> _stocks;
 
-        public StockPriceFetcherService(HttpClient httpClient)
+        public StockPriceFetcherService2(HttpClient httpClient)
         {
             _httpClient = httpClient;
 
             _stocks = new List<(string, string, string, long)>
             {
-                ("JSWSTEEL", "NSE", "JSW Steel", 31),
-                //("ADANIENT", "NSE", "Adani Enterprises", 32),
+                //("JSWSTEEL", "NSE", "JSW Steel", 31),
+                ("ADANIENT", "NSE", "Adani Enterprises", 32),
                 //("BPCL", "NSE", "Bharat Petroleum Corporation", 33),
                 //("INDUSINDBK", "NSE", "IndusInd Bank", 34),
                 //("CIPLA", "NSE", "Cipla", 35),
